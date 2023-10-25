@@ -1,0 +1,14 @@
+.container {
+    margin-top: 50px;
+    border: 1px ridge black;
+}
+
+.was-validated {
+    margin: 50px;
+    padding-bottom: 50px;
+}
+
+h2 {
+    padding-top: 20px;
+    text-align: center;
+}

@@ -1,0 +1,319 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* background-color: rgb(241, 241, 241); */
+}
+
+.overflow {
+    overflow: hidden;
+}
+
+
+/* top */
+.col-sm-12 {
+    text-align: right;
+}
+
+
+/* topbar */
+
+.jumbotron:first-child {
+    margin-top: 50px;
+    border-radius: 0;
+    position: relative;
+    height: 180px;
+}
+
+.menutaikhoan {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 10px;
+}
+
+.anhlogo {
+    position: absolute;
+}
+
+.menutaikhoan a img {
+    width: 15px;
+    margin-left: 10px;
+    margin-top: -3px;
+}
+
+
+/* --------- */
+
+.col-sm-12 ul li a {
+    /* color: white; */
+}
+
+
+/* .btn-group {
+    margin-bottom: 5px;
+    margin-right: 5px;
+    width: 140px;
+} */
+
+
+/* ảnh carousel  */
+
+.carousel-inner .carousel-item img {
+    max-width: 100%;
+    /* height: 700px; */
+}
+
+
+/* ảnh banner */
+
+.row .col-sm-4 img {
+    width: 100%;
+}
+
+.row .col-sm-4 {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.row .col-sm-8 {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.row .col-sm-8 img {
+    width: 100%;
+}
+
+
+/* footer */
+
+.jumbotron .row .col-sm-4 img {
+    width: 35%;
+}
+
+.end {
+    background: black;
+    color: white;
+    text-align: center;
+}
+
+.jumbotron .row .col-md-5 img:first-child {
+    width: 40%;
+}
+
+.img_product {
+    height: 460px;
+    width: 100%;
+    transition: transform .2s;
+    border-radius: 3px;
+}
+
+
+/* hover ảnh */
+
+.img_product:hover {
+    transform: scale(0.96);
+}
+
+.card:hover {
+    box-shadow: 2px 2px 5px black;
+}
+
+
+/* menu hover */
+
+
+/* .dropbtn {
+    background-color: #6b6b6b;
+    color: white;
+    height: 38px;
+    width: 90px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+} */
+
+
+/* The container <div> - needed to position the dropdown content */
+
+
+/* .dropdownMenu {
+    margin: 1px 8px 1px 5px;
+    position: relative;
+    display: inline-block;
+} */
+
+
+/* Dropdown Content (Hidden by Default) */
+
+
+/* 
+.dropdown-content { */
+
+
+/* display: none; */
+
+
+/* top: 80px;
+    visibility: hidden;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    transition: 0.3s;
+} */
+
+
+/* Links inside the dropdown */
+
+
+/* .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+} */
+
+
+/* Change color of dropdown links on hover */
+
+
+/* .dropdown-content a:hover {
+    background-color: #ddd;
+} */
+
+
+/* Show the dropdown menu on hover */
+
+
+/* 
+.dropdownMenu:hover .dropdown-content {
+    visibility: visible;
+    top: 45px;
+}
+ */
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+
+
+/* 
+.dropdownMenu:hover .dropbtn {
+    background-color: #000000;
+} */
+
+
+/* menu hover */
+.navbar ul a {
+    color: #fff;
+}
+a {
+    color: black;
+}
+
+.page-link {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: rgb(156, 156, 156);
+    transition: 0.5s;
+}
+
+
+/* product */
+
+.card-img-top img {
+    max-height: 460px !important;
+}
+.col-sm-12,
+.col-lg-4 {
+    margin-bottom: 20px;
+}
+
+.row .ne {
+    margin-left: 1px;
+}
+
+
+/* chon size san pham */
+
+
+/* 
+.h1 {
+    padding: 50px 100px 50px 100px;
+}
+
+.hh1 {
+    margin-top: 10px;
+    box-shadow: 5px 5px black;
+}
+
+@media only-screen and (min-width: 46.1875em) {
+    .h1 {
+        padding: 10px 20px 10px 20px;
+    }
+} */
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #252525;
+    border-color: #252525;
+}
+
+.size {
+    width: 55px;
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+    height: 30px;
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.img_giohang {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 3px;
+}
+
+.quantity {
+    width: 55px;
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+    height: 30px;
+    border: 1px solid black;
+}
+
+.iconpx {
+    width: 20px;
+}
+
+.giohang {
+    background-color: rgb(221, 221, 221);
+    padding: 10px;
+}
+
+
+/* bottom */
+
+.jumbotron {
+    border-radius: 0;
+}
+
+@media (max-width: 767px) {
+    .img-fluid {
+        height: 260px;
+    }
+    .navbar ul {
+        line-height: 40px;
+    }
+}
