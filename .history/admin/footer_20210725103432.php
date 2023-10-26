@@ -3,7 +3,7 @@
 <div class="bot">
 
 </div>
-<!-- <p class="end">Copyrights © 2021 by Lê Đăng Quang. Powered by THE QuangCoder!</p> -->
+<p class="end">Copyrights © 2021 by Lê Đăng Quang. Powered by THE QuangCoder!</p>
 
 
 
