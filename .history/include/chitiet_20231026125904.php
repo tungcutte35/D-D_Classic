@@ -122,10 +122,8 @@ if (isset($_GET['sanpham'])) {
                         <input type="radio" id="sizel" value="L" name="size">
                         <label onclick=" click_size()" for="sizel" class="btn btn-outline-secondary 1 ">L</label>
                         <br>
-                        <br>
-
                         <?php foreach ($product as $key => $value); ?>
-                        &nbsp;&nbsp;* Số lượng: <input class="quantity" type="number" value="1" name="quantity" min="1" max="<?php echo $sanpham['soluong'] ?>">
+                        &nbsp;&nbsp;Số lượng: <input class="quantity" type="number" value="1" name="quantity" min="1" max="<?php echo $sanpham['soluong'] ?>">
 
                         <input type="hidden" name="id_product" value="<?php echo $sanpham['id_product'] ?>" />
                         <?php if (isset($user['id'])) { ?>
