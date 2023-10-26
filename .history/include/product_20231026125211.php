@@ -62,7 +62,7 @@ if (isset($_GET['id_danhmuc'])) {
       <?php } elseif (isset($_GET['danhmuc'])) { ?>
         <h2>Thời trang <?php echo $danh_mu_c['ten_danhmuc'] ?></h2>
       <?php } else { ?>
-        <h2 class="text-center mt20" >Danh sách các sản phẩm</h2>
+        <h2 class="text-center mt50" >Danh sách các sản phẩm</h2>
       <?php } ?><br>
       <div class="row">
         <?php foreach ($product as $key => $value) { ?>

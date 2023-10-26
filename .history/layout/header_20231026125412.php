@@ -86,6 +86,7 @@ if (isset($user['id'])) {
                             Thanh Toán
                             &nbsp;&nbsp;&nbsp; </li>
                         </a>
+
                     <?php if (isset($user['name'])) { ?>
                         <a href="?pages=users" class="text-bl">
                             <li class="nav-item text-bl "><?= $user['name']; ?>&nbsp;&nbsp;&nbsp; </li>

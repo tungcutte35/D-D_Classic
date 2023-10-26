@@ -437,9 +437,6 @@ a:hover {
   }
 }
 @media screen and (min-width: 1024px) {
-  .sp1 {
-    display: none;
-  }
   .mt50 {
     display: none;
   }
@@ -447,4 +444,7 @@ a:hover {
 .mt20 {
   margin-top: 20px;
   font-size: 30px;
+}
+.sq1 {
+  display: none;
 }

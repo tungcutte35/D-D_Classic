@@ -437,14 +437,10 @@ a:hover {
   }
 }
 @media screen and (min-width: 1024px) {
-  .sp1 {
-    display: none;
+  .sq1 {
+    /* display: none; */
   }
   .mt50 {
     display: none;
   }
-}
-.mt20 {
-  margin-top: 20px;
-  font-size: 30px;
 }

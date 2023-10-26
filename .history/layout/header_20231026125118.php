@@ -81,7 +81,7 @@ if (isset($user['id'])) {
                             Chính Sách
                             &nbsp;&nbsp;&nbsp; </li>
                         </a>
-                        <a href="?pages=home" class="text-bl sp1">
+                        <a href="?pages=product" class="text-bl sp1">
                             <li class="nav-item text-bl ">
                             Thanh Toán
                             &nbsp;&nbsp;&nbsp; </li>

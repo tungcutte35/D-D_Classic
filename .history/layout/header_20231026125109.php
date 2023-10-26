@@ -71,8 +71,8 @@ if (isset($user['id'])) {
         <div class="collapse navbar-collapse " id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto">
                 <ul class="navbar-nav ">
-                <a href="?pages=product" class="text-bl sp1 ">
-                            <li class="nav-item text-bl  ">
+                <a href="?pages=product" class="text-bl ">
+                            <li class="nav-item text-bl ">
                             Sản Phẩm +
                             &nbsp;&nbsp;&nbsp; </li>
                         </a>
@@ -81,7 +81,7 @@ if (isset($user['id'])) {
                             Chính Sách
                             &nbsp;&nbsp;&nbsp; </li>
                         </a>
-                        <a href="?pages=home" class="text-bl sp1">
+                        <a href="?pages=product" class="text-bl sp1">
                             <li class="nav-item text-bl ">
                             Thanh Toán
                             &nbsp;&nbsp;&nbsp; </li>

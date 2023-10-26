@@ -1,27 +1,14 @@
 <?php
-$user = $_SESSION['user'];
-
-// kiểm tra đăng nhập
-if (!isset($_SESSION['user'])) {
-    header('location: dangnhap.php');
-}
-$id_user = $user['id'];
 
 // $don_hang = mysqli_query($conn, "SELECT donhang.*,product.ten_sanpham AS 'ten_sanpham' FROM donhang INNER JOIN product ON donhang.id_product = product.id_product
 // WHERE id_user ='$id_user'");
 // $donhang = mysqli_fetch_assoc($don_hang);
 if (isset($_GET['ma_donhang'])) {
     $ma_donhang = $_GET['ma_donhang'];
-
-
-
-
-
-    $cac_don_hang = mysqli_query($conn, "SELECT diachi_donhang.*,users.name AS 'ten_khachhang'  FROM diachi_donhang
-INNER JOIN users ON diachi_donhang.id_user = users.id WHERE id_user = '$id_user' AND ma_donhang ='$ma_donhang'");
+    $cac_don_hang = mysqli_query($conn, "SELECT *  FROM diachi_donhang WHERE ma_donhang ='$ma_donhang'");
 
     $don_hang = mysqli_query($conn, "SELECT donhang.*,product.ten_sanpham AS 'ten_sanpham' FROM donhang INNER JOIN product ON donhang.id_product = product.id_product
-  WHERE ma_donhang ='$ma_donhang' AND id_user = '$id_user' ");
+  WHERE ma_donhang ='$ma_donhang' ");
 }
 
 // if($donhang  == 0) {
@@ -37,7 +24,7 @@ INNER JOIN users ON diachi_donhang.id_user = users.id WHERE id_user = '$id_user'
         <div class="row giohang ">
 
 
-            <div class=" col-sm-3 col-md-32 col-lg-3"> Mã đơn:
+            <div class=" col-sm-3 col-md-3 col-lg-3"> Mã đơn:
                 <?php echo $value['ma_donhang'] ?>
             </div>
             <div class=" col-sm-3 col-md-3 col-lg-3"> Ngày đặt:
@@ -63,31 +50,31 @@ INNER JOIN users ON diachi_donhang.id_user = users.id WHERE id_user = '$id_user'
         </div>
     <?php } ?>
 
-    <h2 class="mt20">Danh sách các sản phẩm</h2>
+    <h2 class="mt50">Danh sách các sản phẩm</h2>
     <?php $total = 0;
     $giasanpham = 0;
     foreach ($don_hang as $i => $giatri) { ?>
         <div class="row giohang ">
 
             <div class=" col-sm-1 col-md-1 col-lg-1">STT:
-                <?php echo $i + 1 ?>
+                <?= $i + 1 ?>
             </div>
             <div class=" col-sm-3 col-md-3 col-lg-3"> Tên SP:
-                <?php echo $giatri['ten_sanpham'] ?>
+                <?= $giatri['ten_sanpham'] ?>
             </div>
             <div class=" col-sm-2 col-md-2 col-lg-2"> cỡ:
-                <?php echo $giatri['size'] ?>
+                <?= $giatri['size'] ?>
             </div>
             <div class=" col-sm-2 col-md-2 col-lg-2"> sl:
-                <?php echo $giatri['soluong'] ?>
+                <?= $giatri['soluong'] ?>
             </div>
             <div class=" col-sm-2 col-md-2 col-lg-2"> Giá:
-                <?php echo number_format($giasanpham = $giatri['gia_sanpham'] * $giatri['soluong']) ?> VND
+                <?= number_format($giasanpham = $giatri['gia_sanpham'] * $giatri['soluong']) ?> VND
             </div>
 
 
             <div class=" col-sm-2 col-md-2 col-lg-2">
-                <a href="?pages=chitietsanpham&sanpham=<?php echo $giatri['id_product'] ?>" class="btn btn-outline-secondary">Chi tiết SP</a>
+                <a href="?pages=chitietsanpham&sanpham=<?= $giatri['id_product'] ?>" class="btn btn-outline-secondary">Chi tiết SP</a>
             </div>
         </div>
     <?php $total += $giasanpham;
@@ -96,7 +83,7 @@ INNER JOIN users ON diachi_donhang.id_user = users.id WHERE id_user = '$id_user'
         <div class=" col-sm-10 col-md-10 col-lg-10">Địa chỉ:
             <?php echo $value['diachi'] ?>
         </div>
-        <div class=" col-sm-10 col-md-10 col-lg-10">SDT: <?php echo $value['phone'] ?> </div>
+        <div class=" col-sm-10 col-md-10 col-lg-10">SDT: <?= $value['phone'] ?> </div>
         <div class=" col-sm-10 col-md-10 col-lg-10">Ghi chú của bạn:
             <?php echo $value['ghichu'] ?>
         </div>
@@ -104,12 +91,12 @@ INNER JOIN users ON diachi_donhang.id_user = users.id WHERE id_user = '$id_user'
             <?php if ($value['thanhtoan'] == 0) {
                 echo '<p> Thanh toán khi nhận hàng </P>';
             } else {
-                echo '<p> Chuyển khoản qua ngân hàng</p>';
+                echo '<p> Chuyển khoản qua ngân hàng</P>';
             } ?>
         </div>
 
         <div class=" col-sm-10 col-md-10 col-lg-10">
-          Tổng: <?php echo number_format($total) ?> VND
+           Tổng: <?php echo number_format($total) ?> VND
         </div>
     </div>
 
