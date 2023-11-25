@@ -1,123 +1,117 @@
 <?php
 
-
 // mua hàng
 $trangthai = 0;
 
 if (isset($_POST['submit'])) {
-  $phone = $_POST['phone'];
-  $diachi = $_POST['diachi'];
-  $ghichu = $_POST['ghichu'];
-  $thanhtoan = $_POST['thanhtoan'];
-  $email = $_POST['email'];
-  $id_user = $_POST['id_user'];
-  $rd_mahang = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  $ma_donhang = '01' . substr(str_shuffle($rd_mahang), 0, 10);
-  $id_product = $_POST['id_product'];
-  $size = $_POST['size'];
-  $soluong = $_POST['quantity'];
-  $gia_sanpham = $_POST['gia_sanpham'];
-  $name = $_POST['name'];
+    $phone = $_POST['phone'];
+    $diachi = $_POST['diachi'];
+    $ghichu = $_POST['ghichu'];
+    $thanhtoan = $_POST['thanhtoan'];
+    $email = $_POST['email'];
+    $id_user = $_POST['id_user'];
+    $rd_mahang = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $ma_donhang = '01' . substr(str_shuffle($rd_mahang), 0, 10);
+    $id_product = $_POST['id_product'];
+    $size = $_POST['size'];
+    $soluong = $_POST['quantity'];
+    $gia_sanpham = $_POST['gia_sanpham'];
+    $name = $_POST['name'];
 
-
-  $diachi_donhang = mysqli_query($conn,"INSERT INTO diachi_donhang(ma_donhang,id_user,phone,diachi,ghichu,thanhtoan,trang_thai,name,email)
+    $diachi_donhang = mysqli_query($conn, "INSERT INTO diachi_donhang(ma_donhang,id_user,phone,diachi,ghichu,thanhtoan,trang_thai,name,email)
   VALUES ('$ma_donhang','$id_user','$phone','$diachi','$ghichu','$thanhtoan','$trangthai','$name','$email')");
 
-  if ($diachi) {
+    if ($diachi) {
 
-      $dat_hang = mysqli_query($conn, "INSERT INTO donhang(ma_donhang,id_product,id_user,size,soluong,gia_sanpham,trang_thai,email,phone) VALUES
+        $dat_hang = mysqli_query($conn, "INSERT INTO donhang(ma_donhang,id_product,id_user,size,soluong,gia_sanpham,trang_thai,email,phone) VALUES
       ('$ma_donhang','$id_product','$id_user','$size','$soluong','$gia_sanpham','$trangthai','$email','$phone')");
 
-if($dat_hang) {
-    header('location: ?pages=users');
-}
+        if ($dat_hang) {
+            include_once 'include/send_mail.php';
+            sendEmail($email, 'Your Order', 'D&D Classic, Trân trọng cảm ơn quý khách /n Đơn hàng của quý khách đã đặt thành công! ');
+            sendEmail("dongphucthiennam@gmail.com", "Have an order", "Có một đơn hàng trên web");
 
-  }
+            header('location: ?pages=users');
+        }
+
+    }
 }
 //
 
-
 if (isset($_POST['themgiohang'])) {
-  $id_product = $_POST['id_product'];
-  $id_user = $_POST['id_user'];
-  $ten_sanpham = $_POST['ten_sanpham'];
-  $anh_sanpham = $_POST['anh_sanpham'];
-  $size = $_POST['size'];
-  $quantity = $_POST['quantity'];
-  $gia_sanpham = $_POST['gia_sanpham'];
+    $id_product = $_POST['id_product'];
+    $id_user = $_POST['id_user'];
+    $ten_sanpham = $_POST['ten_sanpham'];
+    $anh_sanpham = $_POST['anh_sanpham'];
+    $size = $_POST['size'];
+    $quantity = $_POST['quantity'];
+    $gia_sanpham = $_POST['gia_sanpham'];
 
-  $select_giohang = mysqli_query($conn, "SELECT * FROM giohang WHERE id_product = '$id_product' AND id_user ='$id_user'");
-  $sanpham_id = mysqli_fetch_assoc($select_giohang);
-  if ($sanpham_id['id_product'] > 0) {
+    $select_giohang = mysqli_query($conn, "SELECT * FROM giohang WHERE id_product = '$id_product' AND id_user ='$id_user'");
+    $sanpham_id = mysqli_fetch_assoc($select_giohang);
+    if ($sanpham_id['id_product'] > 0) {
 
-?>
+        ?>
     <script>
       alert("Sản phẩm đã có trong giỏ hàng !");
     </script>
 
     <?php
 
-  } else {
-    $themvaogio = mysqli_query($conn, "INSERT INTO giohang(id_product,id_user,ten_sanpham,anh_sanpham,size,soluong,gia_sanpham)
-    VALUES('$id_product','$id_user','$ten_sanpham','$anh_sanpham','$size','$quantity','$gia_sanpham' ) ");
-    if ($themvaogio) {
-      header("location: ?pages=giohang");
     } else {
-    ?>
+        $themvaogio = mysqli_query($conn, "INSERT INTO giohang(id_product,id_user,ten_sanpham,anh_sanpham,size,soluong,gia_sanpham)
+    VALUES('$id_product','$id_user','$ten_sanpham','$anh_sanpham','$size','$quantity','$gia_sanpham' ) ");
+        if ($themvaogio) {
+            header("location: ?pages=giohang");
+        } else {
+            ?>
       <script>
         alert("Thêm thất bại");
       </script>
     <?php
+}
     }
-  }
 }
 // $sql_selectgiohang = mysqli_query($conn, "SELECT * FROM giohang WHERE sanpham_id ='$sanpham_id'");
 // $count = mysqli_num_rows($sql_selectgiohang);
 // header("location:javascript://history.go(-1)");
 
-
-
 if (isset($_POST['capnhat'])) {
 
-  for ($i = 0; $i < count($_POST['id_product']); $i++) {
+    for ($i = 0; $i < count($_POST['id_product']); $i++) {
 
-    $id_product = $_POST['id_product'][$i];
-    $size = $_POST['size'][$i];
-    $quantity = $_POST['quantity'][$i];
+        $id_product = $_POST['id_product'][$i];
+        $size = $_POST['size'][$i];
+        $quantity = $_POST['quantity'][$i];
 
+        $capnhat = mysqli_query($conn, "UPDATE giohang SET size ='$size', soluong ='$quantity' WHERE id_product ='$id_product' AND id_user = '$id_user'");
 
-    $capnhat = mysqli_query($conn, "UPDATE giohang SET size ='$size', soluong ='$quantity' WHERE id_product ='$id_product' AND id_user = '$id_user'");
-
-    header('location:?pages=giohang');
-  }
+        header('location:?pages=giohang');
+    }
 }
 
 $sl_tronggio = mysqli_num_rows($giohang);
 
 $user = (isset($_SESSION['user'])) ? $_SESSION['user'] : [];
 if (!isset($user['name'])) {
-  header('location: ?pages=users');
-
+    header('location: ?pages=users');
 
 } else {
 
-  if (isset($_POST['muangay'])) {
-    $id_user = $_POST['id_user'];
-    $id_product = $_POST['id_product'];
-    $size = $_POST['size'];
-    $soluong = $_POST['quantity'];
-    $gia_sanpham = $_POST['gia_sanpham'];
-    $san_pham_mua_1 = mysqli_query($conn, "SELECT ten_sanpham FROM product WHERE id_product ='$id_product' ");
-    $san_pham = mysqli_fetch_assoc($san_pham_mua_1);
+    if (isset($_POST['muangay'])) {
+        $id_user = $_POST['id_user'];
+        $id_product = $_POST['id_product'];
+        $size = $_POST['size'];
+        $soluong = $_POST['quantity'];
+        $gia_sanpham = $_POST['gia_sanpham'];
+        $san_pham_mua_1 = mysqli_query($conn, "SELECT ten_sanpham FROM product WHERE id_product ='$id_product' ");
+        $san_pham = mysqli_fetch_assoc($san_pham_mua_1);
 
+        // mua hang
 
+        //
 
-    // mua hang
-
-
-    //
-
-    ?>
+        ?>
 
     <div class="container">
       <div class="py-5 text-center">
@@ -137,7 +131,7 @@ if (!isset($user['name'])) {
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
 
-                <h6 class="my-0"><?php echo $san_pham['ten_sanpham']  ?></h6>
+                <h6 class="my-0"><?php echo $san_pham['ten_sanpham'] ?></h6>
                 <small class="text-muted"><?php echo $soluong ?> Cái, &nbsp; Cỡ <?php echo $size ?> </small>
               </div>
               <span class="text-muted"><?php echo number_format($giasanpham = $soluong * $gia_sanpham) ?> VND</span>
@@ -312,8 +306,8 @@ creditRadio.addEventListener("click", function() {
 
 
   <?php
-  } else {
-  ?>
+} else {
+        ?>
 
     <br>
     <div class="container-fluid">
@@ -326,7 +320,7 @@ creditRadio.addEventListener("click", function() {
         <?php $total = 0;
         $giasanpham = 0;
         foreach ($giohang as $key => $value) {
-        ?>
+            ?>
 
           <div class="row giohang ">
 
@@ -336,7 +330,7 @@ creditRadio.addEventListener("click", function() {
 
             </div>
             <div class=" col-sm-1 col-md-1 col-lg-1">
-              <img class="img_giohang" src="uploads/<?php echo $value['anh_sanpham']  ?>" alt="" width="60px">
+              <img class="img_giohang" src="uploads/<?php echo $value['anh_sanpham'] ?>" alt="" width="60px">
 
             </div>
             <div class="col-4 col-sm-1 col-md-1 col-lg-1">Cỡ:
@@ -351,8 +345,8 @@ creditRadio.addEventListener("click", function() {
             </div>
             <div class="col-4 col-sm-1 col-md-1 col-lg-1">
               <?php $idsanpham = $value['id_product'];
-              $product = mysqli_query($conn, "SELECT * FROM product WHERE id_product = '$idsanpham'");
-              $sanpham = mysqli_fetch_assoc($product); ?>
+            $product = mysqli_query($conn, "SELECT * FROM product WHERE id_product = '$idsanpham'");
+            $sanpham = mysqli_fetch_assoc($product);?>
               SL: <input class=" quantity" type="number" value="<?php echo $value['soluong'] ?>" name="quantity[]" min="1" max="<?php echo $sanpham['soluong'] ?>">
 
             </div>
@@ -370,13 +364,13 @@ creditRadio.addEventListener("click", function() {
             <div class="col-4 col-sm-1 col-md-1 col-lg-1">
               <a class="btn btn-outline-secondary" onclick="return confirm('Xóa sản phẩm: <?php echo $value['ten_sanpham'] ?> không ?');" href="include/xoasanpham.php?id=<?php echo $value['id'] ?>">Xóa</a>
             </div>
-            <input type="hidden" name="id_product[]" value="<?php echo $value['id_product']  ?>">
+            <input type="hidden" name="id_product[]" value="<?php echo $value['id_product'] ?>">
           </div>
           <br>
         <?php $total += $giasanpham;
-        } ?>
+        }?>
         <div class="row">
-          <?php if ($sl_tronggio > 0) { ?>
+          <?php if ($sl_tronggio > 0) {?>
             <div class=" col-sm-4 col-md-3 col-lg-3 ">
 
               <input class="btn btn-outline-dark" type="submit" name="capnhat" value="Cập nhật giỏ hàng ">
@@ -384,12 +378,12 @@ creditRadio.addEventListener("click", function() {
             <div class=" col-sm-4 col-md-3 col-lg-3 ml-auto">
               <p class="btn btn-dark">Tổng tiền tất cả sản phẩm: <?php echo number_format($total) ?> VND</p>
             </div>
-          <?php } else { ?>
+          <?php } else {?>
             <div class=" col-sm-4 col-md-3 col-lg-3 ">
               <p class="btn btn-dark">Giỏ hàng của bạn đang trống !</p>
 
             </div>
-          <?php } ?>
+          <?php }?>
 
         </div>
         <hr>
@@ -401,19 +395,19 @@ creditRadio.addEventListener("click", function() {
 
         <div class="row">
           <?php
-          if ($sl_tronggio > 0) { ?>
+if ($sl_tronggio > 0) {?>
             <div class=" col-sm-4 col-md-3 col-lg-3">
 
               <a class="btn btn-outline-dark" href="?pages=thanhtoan&giohang=<?php echo $value['id_user'] ?>">
                 Thanh toán giỏ hàng</a>
             </div>
-          <?php } ?>
+          <?php }?>
 
         </div>
         </form>
         <hr class="my-4">
 
     <?php }
-} ?>
+}?>
 
     </div>

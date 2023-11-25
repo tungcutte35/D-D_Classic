@@ -3,18 +3,14 @@
 // $query_user = mysqli_query($conn,"SELECT * FROM users WHERE id = '$id_user'");
 // $khachhang = mysqli_fetch_assoc($query_user);
 
-
-
 if (isset($_POST['mua_ngay'])) {
     $id_product = $_POST['id_product'];
     $size = $_POST['size'];
     $soluong = $_POST['quantity'];
     $gia_sanpham = $_POST['gia_sanpham'];
 
-
-
-$san_pham_mua = mysqli_query($conn,"SELECT ten_sanpham FROM product WHERE id_product ='$id_product' ");
-$san_pham = mysqli_fetch_assoc($san_pham_mua);
+    $san_pham_mua = mysqli_query($conn, "SELECT ten_sanpham FROM product WHERE id_product ='$id_product' ");
+    $san_pham = mysqli_fetch_assoc($san_pham_mua);
 
 }
 //  else {
@@ -23,45 +19,42 @@ $san_pham = mysqli_fetch_assoc($san_pham_mua);
 $trangthai = 0;
 
 if (isset($_POST['submit'])) {
-  $phone = $_POST['phone'];
-  $diachi = $_POST['diachi'];
-  $ghichu = $_POST['ghichu'];
-  $thanhtoan = $_POST['thanhtoan'];
-  $email = $_POST['email'];
-  $id_user = $_POST['id_user'];
-  $rd_mahang = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  $ma_donhang = '01' . substr(str_shuffle($rd_mahang), 0, 10);
-  $id_product = $_POST['id_product'];
-  $size = $_POST['size'];
-  $soluong = $_POST['quantity'];
-  $gia_sanpham = $_POST['gia_sanpham'];
-  $name = $_POST['name'];
+    $phone = $_POST['phone'];
+    $diachi = $_POST['diachi'];
+    $ghichu = $_POST['ghichu'];
+    $thanhtoan = $_POST['thanhtoan'];
+    $email = $_POST['email'];
+    $id_user = $_POST['id_user'];
+    $rd_mahang = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $ma_donhang = '01' . substr(str_shuffle($rd_mahang), 0, 10);
+    $id_product = $_POST['id_product'];
+    $size = $_POST['size'];
+    $soluong = $_POST['quantity'];
+    $gia_sanpham = $_POST['gia_sanpham'];
+    $name = $_POST['name'];
 
-
-  $diachi_donhang = mysqli_query($conn,"INSERT INTO diachi_donhang(ma_donhang,id_user,phone,diachi,ghichu,thanhtoan,trang_thai,name,email)
+    $diachi_donhang = mysqli_query($conn, "INSERT INTO diachi_donhang(ma_donhang,id_user,phone,diachi,ghichu,thanhtoan,trang_thai,name,email)
   VALUES ('$ma_donhang','$id_user','$phone','$diachi','$ghichu','$thanhtoan','$trangthai','$name','$email')");
 
-  if ($diachi) {
+    if ($diachi) {
+        include_once 'include/send_mail.php';
+        sendEmail($email, 'Your Order', 'D&D Classic, Trân trọng cảm ơn quý khách /n Đơn hàng của quý khách đã đặt thành công! ');
+        sendEmail("dongphucthiennam@gmail.com", "Have an order", "Có một đơn hàng trên web");
 
-      $dat_hang = mysqli_query($conn, "INSERT INTO donhang(ma_donhang,id_product,id_user,size,soluong,gia_sanpham,trang_thai,email,phone) VALUES
+        $dat_hang = mysqli_query($conn, "INSERT INTO donhang(ma_donhang,id_product,id_user,size,soluong,gia_sanpham,trang_thai,email,phone) VALUES
       ('$ma_donhang','$id_product','$id_user','$size','$soluong','$gia_sanpham','$trangthai','$email','$phone')");
 
-if($dat_hang) {
-    header('location: ?pages=kiemtra_donhang');
+        if ($dat_hang) {
+            header('location: ?pages=kiemtra_donhang');
+        }
+
+    }
 }
 
-  }
-}
-
-if(isset($_GET['id_san_pham'])) {
-  $id_sanpham = $_GET['id_san_pham'];
-
-
+if (isset($_GET['id_san_pham'])) {
+    $id_sanpham = $_GET['id_san_pham'];
 
 }
-
-
-
 
 ?>
 
@@ -86,8 +79,8 @@ if(isset($_GET['id_san_pham'])) {
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
 
-                <h6 class="my-0"><?php echo $san_pham['ten_sanpham']  ?></h6>
-                <small class="text-muted"><?php echo $soluong?> Cái, &nbsp; Cỡ <?php echo $size ?> </small>
+                <h6 class="my-0"><?php echo $san_pham['ten_sanpham'] ?></h6>
+                <small class="text-muted"><?php echo $soluong ?> Cái, &nbsp; Cỡ <?php echo $size ?> </small>
               </div>
               <span class="text-muted"><?php echo number_format($giasanpham = $soluong * $gia_sanpham) ?> VND</span>
             </li>

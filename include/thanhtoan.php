@@ -3,47 +3,45 @@
 // $query_user = mysqli_query($conn,"SELECT * FROM users WHERE id = '$id_user'");
 // $khachhang = mysqli_fetch_assoc($query_user);
 
-
 $trangthai = 0;
 
 if (isset($_POST['submit'])) {
-  $phone = $_POST['phone'];
-  $diachi = $_POST['diachi'];
-  $name = $_POST['name'];
-  $ghichu = $_POST['ghichu'];
-  $thanhtoan = $_POST['thanhtoan'];
-  $id_user = $_POST['id_user'];
-  $rd_mahang = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  $ma_donhang = '01' . substr(str_shuffle($rd_mahang), 0, 10);
+    $phone = $_POST['phone'];
+    $diachi = $_POST['diachi'];
+    $name = $_POST['name'];
+    $ghichu = $_POST['ghichu'];
+    $thanhtoan = $_POST['thanhtoan'];
+    $id_user = $_POST['id_user'];
+    $rd_mahang = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $ma_donhang = '01' . substr(str_shuffle($rd_mahang), 0, 10);
 
-
-  $diachi_donhang = mysqli_query($conn, "INSERT INTO diachi_donhang(ma_donhang,id_user,phone,diachi,ghichu,thanhtoan,trang_thai,name)
+    $diachi_donhang = mysqli_query($conn, "INSERT INTO diachi_donhang(ma_donhang,id_user,phone,diachi,ghichu,thanhtoan,trang_thai,name)
   VALUES ('$ma_donhang','$id_user','$phone','$diachi','$ghichu','$thanhtoan','$trangthai','$name')");
 
-  if ($diachi) {
+    if ($diachi) {
 
-    for ($i = 0; $i < count($_POST['id_product']); $i++) {
-      $id_product = $_POST['id_product'][$i];
-      $size = $_POST['size'][$i];
-      $soluong = $_POST['quantity'][$i];
-      $gia_sanpham = $_POST['gia_sanpham'][$i];
+        for ($i = 0; $i < count($_POST['id_product']); $i++) {
+            $id_product = $_POST['id_product'][$i];
+            $size = $_POST['size'][$i];
+            $soluong = $_POST['quantity'][$i];
+            $gia_sanpham = $_POST['gia_sanpham'][$i];
 
-      $dat_hang = mysqli_query($conn, "INSERT INTO donhang(ma_donhang,id_product,id_user,size,soluong,gia_sanpham,trang_thai) VALUES
+            $dat_hang = mysqli_query($conn, "INSERT INTO donhang(ma_donhang,id_product,id_user,size,soluong,gia_sanpham,trang_thai) VALUES
       ('$ma_donhang','$id_product','$id_user','$size','$soluong','$gia_sanpham','$trangthai')");
 
-      if ($dat_hang) {
-        $xoa_giohang = mysqli_query($conn, "DELETE FROM giohang WHERE id_user = '$id_user'");
-        if ($xoa_giohang) {
-          header('location: ?pages=users');
+            if ($dat_hang) {
+                include_once 'include/send_mail.php';
+                sendEmail($email, 'Your Order', 'D&D Classic, Trân trọng cảm ơn quý khách /n Đơn hàng của quý khách đã đặt thành công! ');
+                sendEmail("dongphucthiennam@gmail.com", "Have an order", "Có một đơn hàng trên web");
+
+                $xoa_giohang = mysqli_query($conn, "DELETE FROM giohang WHERE id_user = '$id_user'");
+                if ($xoa_giohang) {
+                    header('location: ?pages=users');
+                }
+            }
         }
-      }
     }
-  }
 }
-
-
-
-
 
 ?>
 
@@ -68,8 +66,8 @@ if (isset($_POST['submit'])) {
         </h4>
         <ul class="list-group mb-3">
           <?php $total = 0;
-          $giasanpham = 0;
-          foreach ($giohang as $key => $value) {  ?>
+$giasanpham = 0;
+foreach ($giohang as $key => $value) {?>
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
 
@@ -80,7 +78,7 @@ if (isset($_POST['submit'])) {
               <span class="text-muted"><?php echo number_format($giasanpham = $value['gia_sanpham'] * $value['soluong']) ?> VND</span>
             </li>
           <?php $total += $giasanpham;
-          }  ?>
+}?>
           <li class="list-group-item d-flex justify-content-between">
             <span>Tổng cộng (VND)</span>
             <strong><?php echo number_format($total) ?> VND</strong>
@@ -170,13 +168,13 @@ if (isset($_POST['submit'])) {
           <div class="row">
             <input type="text" hidden name="id_user" value="<?php echo $user['id'] ?>">
             <input type="text" hidden name="name" value="<?php echo $user['name'] ?>">
-            <?php foreach ($giohang as $key => $value) { ?>
+            <?php foreach ($giohang as $key => $value) {?>
 
               <input type="text" hidden name="size[]" value="<?php echo $value['size'] ?>">
               <input type="text" hidden name="quantity[]" value="<?php echo $value['soluong'] ?>">
               <input type="text" hidden name="gia_sanpham[]" value="<?php echo $value['gia_sanpham'] ?>">
               <input type="text" hidden name="id_product[]" value="<?php echo $value['id_product'] ?>">
-            <?php } ?>
+            <?php }?>
           </div>
 
         </form>
